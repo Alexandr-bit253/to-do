@@ -1,8 +1,13 @@
 from fastapi import FastAPI
-from pydantic import EmailStr
+from pydantic import BaseModel, EmailStr
 
 
 app = FastAPI(title="TODO API")
+
+
+class CreateUser(BaseModel):
+    email: EmailStr
+    name: str
 
 
 @app.get("/hello/")
@@ -12,10 +17,20 @@ async def hello(name: str = "world"):
 
 
 @app.post("/users/")
-async def create_user(email: EmailStr):
-    return {"user": {
-        "email": email,
-    }}
+async def create_user(user: CreateUser):
+    return {
+        "message": "success",
+        "email": user.email
+    }
+    
+    
+@app.post("/calc/add")
+async def add(a: int, b: int):
+    return {
+        "a": a,
+        "b": b,
+        "result": a + b,
+    }
 
 
 @app.get("/items/")
