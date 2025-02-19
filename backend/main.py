@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from items_views import router as items_router
-from users_views import router as users_router
+from users.views import router as users_router
 
 
 app = FastAPI(title="TODO API")

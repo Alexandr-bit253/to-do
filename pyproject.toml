@@ -1,23 +1,17 @@
-[project]
-name = "microshop"
+[tool.poetry]
+name = "to-do"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "yoda",email = "you@example.com"}
-]
-license = {text = "MIT"}
+authors = ["yoda <you@example.com>"]
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "fastapi (>=0.115.8,<0.116.0)",
-    "uvicorn[standard] (>=0.34.0,<0.35.0)"
-]
 
-[tool.poetry]
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.8"
+uvicorn = "^0.34.0"
+pydentic = {extras = ["all"], version = "^0.0.1.dev3"}
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.3.4"
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
