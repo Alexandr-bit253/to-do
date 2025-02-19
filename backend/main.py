@@ -1,13 +1,12 @@
 from fastapi import FastAPI
-from pydantic import BaseModel, EmailStr
+
+from items_views import router as items_router
+from users_views import router as users_router
 
 
 app = FastAPI(title="TODO API")
-
-
-class CreateUser(BaseModel):
-    email: EmailStr
-    name: str
+app.include_router(items_router)
+app.include_router(users_router)
 
 
 @app.get("/hello/")
@@ -16,14 +15,6 @@ async def hello(name: str = "world"):
     return {"message": f"Hello, {name}!"}
 
 
-@app.post("/users/")
-async def create_user(user: CreateUser):
-    return {
-        "message": "success",
-        "email": user.email
-    }
-    
-    
 @app.post("/calc/add")
 async def add(a: int, b: int):
     return {
@@ -31,21 +22,3 @@ async def add(a: int, b: int):
         "b": b,
         "result": a + b,
     }
-
-
-@app.get("/items/")
-async def list_items():
-    return [
-        "item1",
-        "item2",
-    ]
-
-
-@app.get("/items/latest/")
-async def get_latest_item():
-    return {"item": {"id": "0", "name": "latest"}}
-
-
-@app.get("/items/{item_id}/")
-async def get_item(item_id: int):
-    return {"item_id": item_id}
