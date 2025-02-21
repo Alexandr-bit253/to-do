@@ -10,6 +10,7 @@ python = "^3.12"
 fastapi = "^0.115.8"
 uvicorn = "^0.34.0"
 pydentic = {extras = ["all"], version = "^0.0.1.dev3"}
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.38"}
 
 
 [tool.poetry.group.dev.dependencies]
