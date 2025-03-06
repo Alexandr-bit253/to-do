@@ -2,7 +2,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.engine import Result
 from sqlalchemy import select
 
-from backend.api_v1.products.schemas import ProductCreate
+from backend.api_v1.products.schemas import (
+    ProductCreate,
+    ProductUpdate,
+    ProductUpdatePartial,
+)
 from backend.core.models import Product
 
 
@@ -25,3 +29,20 @@ async def create_product(
     await session.commit()
     await session.refresh(product)
     return product
+
+
+async def update_product(
+    session: AsyncSession,
+    product: Product,
+    product_update: ProductUpdate | ProductUpdatePartial,
+    partial: bool = False,
+) -> Product | Exception:
+    for key, value in product_update.model_dump(exclude_unset=partial).items():
+        setattr(product, key, value)
+    await session.commit()
+    return product
+
+
+async def delete_product(session: AsyncSession, product: Product) -> None:
+    await session.delete(product)
+    await session.commit()
